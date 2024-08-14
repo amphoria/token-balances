@@ -1,0 +1,67 @@
+body {
+  margin: 0;
+  padding-left: 20px;
+  background: #29282A;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  color: #059669;
+  margin-bottom: 50px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  color: #059669;
+  margin-bottom: 20px;
+}
+
+.user-address {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  width: 450px;
+  padding: 10px 20px;
+  background: #474649;
+  color: whitesmoke;
+}
+
+.button-div {
+  margin-top: 50px;
+  margin-bottom: 40px;
+}
+
+.buttons {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  width: 242px;
+  background: #474649;
+  color: whitesmoke;
+  padding: 10px 0;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.update-btn {
+  margin-right: 10px;
+}
+
+.buttons:hover {
+  cursor: pointer;
+}
+
+.balances {
+  display: flex;
+  flex-direction: column;
+  color: whitesmoke;
+}
+
+.balance {
+  display: flex;
+  padding-left: 20px;
+  padding-bottom: 15px;
+}
+
+.bal-label {
+  width: 270px;
+}
