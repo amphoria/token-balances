@@ -47,6 +47,19 @@ const eigenlayerABI =
   "function sharesToUnderlyingView(uint256) view returns (uint256)"  
 ]
 
+// reALT Contract
+const reALTAddress = "0xF96798F49936EfB1a56F99Ceae924b6B8359afFb"
+const reALTABI = 
+[
+  // Some details about the contract
+  "function name() view returns (string)",
+  "function decimals() view returns (uint8)",
+  // Function to get balance of address
+  "function balanceOf(address) view returns (uint256)",
+  // Function to get balance of ALT tokens
+  "function convertToAssets(uint256) view returns (uint256)"
+]
+
 // re.al ETH rewards contract
 const realEthAddress = "0xf4e03D77700D42e13Cd98314C518f988Fd6e287a"
 const realEthABI =
@@ -67,6 +80,7 @@ const chorusOneContract = new ethers.Contract(chorusOneAddress, stakewiseABI, et
 const osethContract = new ethers.Contract(osETHAddress, osETHABI, ethProvider)
 const eigenlayerPoolContract = new ethers.Contract(eigenlayerPoolAddress, 
                                                     eigenlayerABI, ethProvider)
+const reALTContract = new ethers.Contract(reALTAddress, reALTABI, ethProvider)
 const realEthContract = new ethers.Contract(realEthAddress, realEthABI, realProvider)
 const realRWAContract = new ethers.Contract(realRWAAddress, realRWAABI, realProvider)
 
@@ -95,6 +109,7 @@ export default function App() {
   const [osethChorusOneBal, setOsethChorusOneBal] = useState(0)
   const [osethWalletBal, setOsethWalletBal] = useState(0)
   const [eigenlayerOethBal, setEigenLayerOethBal] = useState(0)
+  const [altlayerBal, setAltlayerBal] = useState(0)
   const [realDaiBal, setRealDaiBal] = useState(0)
   const [realUstbBal, setRealUstbBal] = useState(0)
   const [arcanaUsdBal, setArcanaUsdBal] = useState(0)
@@ -176,6 +191,13 @@ export default function App() {
     assets = await eigenlayerPoolContract.sharesToUnderlyingView(shares)
     setEigenLayerOethBal(ethers.formatEther(assets))
 
+    shares = await reALTContract.balanceOf(userAddress)
+    console.log(`shares = ${shares}`)
+    assets = await reALTContract.convertToAssets(shares)
+    console.log(`assets = ${assets}`)
+    setAltlayerBal(ethers.formatEther(assets))
+    console.log(`altlayerBal = ${altlayerBal}`)
+
     try {
         const res = await fetch(`https://explorer.re.al/api/v2/addresses/${userAddress}/token-balances`)
         if (!res.ok) {
@@ -230,7 +252,7 @@ export default function App() {
       <label htmlFor="user-address">Retrieve current balances for this address:</label>
         <input 
             type="text" 
-            class="user-address" 
+            className="user-address" 
             id="user-address" 
             value={userAddress} 
             onChange={addressChange} 
@@ -266,6 +288,10 @@ export default function App() {
             <div className="balance">
                 <div className="bal-label">EigenLayer OETH:</div>
                 <div className="bal-value">{eigenlayerOethBal}</div>
+            </div>
+            <div className="balance">
+                <div className="bal-label">Altlayer ALT:</div>
+                <div className="bal-value">{altlayerBal}</div>
             </div>
             <div className="balance">
                 <div className="bal-label">re.al DAI:</div>
