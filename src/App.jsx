@@ -192,11 +192,8 @@ export default function App() {
     setEigenLayerOethBal(ethers.formatEther(assets))
 
     shares = await reALTContract.balanceOf(userAddress)
-    console.log(`shares = ${shares}`)
     assets = await reALTContract.convertToAssets(shares)
-    console.log(`assets = ${assets}`)
     setAltlayerBal(ethers.formatEther(assets))
-    console.log(`altlayerBal = ${altlayerBal}`)
 
     try {
         const res = await fetch(`https://explorer.re.al/api/v2/addresses/${userAddress}/token-balances`)
