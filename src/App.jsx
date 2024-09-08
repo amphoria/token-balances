@@ -115,7 +115,6 @@ export default function App() {
   const [arcanaUsdBal, setArcanaUsdBal] = useState(0)
   const [realUkreBal, setRealUkreBal] = useState(0)
   const [reethRewardsBal, setReethRewardsBal] = useState(0)
-  const [rwaRewardsBal, setRwaRewardsBal] = useState(0)
 
   useEffect(() => {
     // Default wallet address
@@ -223,12 +222,9 @@ export default function App() {
         console.log(error)
     }
 
-    let balWei
     const result = await realEthContract.claimable(userAddress)
-    balWei = result[0]
+    const balWei = result[0]
     setReethRewardsBal(ethers.formatEther(balWei))
-    balWei = await realRWAContract.claimable(userAddress)
-    setRwaRewardsBal(ethers.formatEther(balWei))
   }
 
   function addressChange(e) {
@@ -312,10 +308,6 @@ export default function App() {
             <div className="balance">
                 <div className="bal-label">reETH Rewards:</div>
                 <div className="bal-value">{reethRewardsBal}</div>
-            </div>
-            <div className="balance">
-                <div className="bal-label">RWA Rewards:</div>
-                <div className="bal-value">{rwaRewardsBal}</div>
             </div>
         </div>
     </>
