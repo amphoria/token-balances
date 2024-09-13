@@ -64,14 +64,7 @@ const reALTABI =
 const realEthAddress = "0xf4e03D77700D42e13Cd98314C518f988Fd6e287a"
 const realEthABI =
 [
-  "function claimable(address) view returns (uint256, uint256[], uint256[], uint256, uint256)"
-]
-
-// re.al RWA rewards contract
-const realRWAAddress = "0x9D146A1C099adEE2444aFD629c04B4cbb5eE1539"
-const realRWAABI =
-[
-  "function claimable(address) view returns (uint256)"
+  "function claimable(address) view returns (uint256, uint256)"
 ]
 
 // Ethers contract objects
@@ -82,7 +75,6 @@ const eigenlayerPoolContract = new ethers.Contract(eigenlayerPoolAddress,
                                                     eigenlayerABI, ethProvider)
 const reALTContract = new ethers.Contract(reALTAddress, reALTABI, ethProvider)
 const realEthContract = new ethers.Contract(realEthAddress, realEthABI, realProvider)
-const realRWAContract = new ethers.Contract(realRWAAddress, realRWAABI, realProvider)
 
 function getCookie(caddr) {
   let address = caddr + "=";
