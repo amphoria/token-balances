@@ -5,7 +5,8 @@ import { ethers } from "ethers";
 // Ethers providers
 const ethProvider = 
 new ethers.JsonRpcProvider("https://eth-mainnet.g.alchemy.com/v2/JTXUw4DQJ0PEVskCBSsadhBnk3rkd4vN")
-const realProvider = new ethers.JsonRpcProvider("https://tangible-real.gateway.tenderly.co/29G4PChJRVFiAJiyQg1FnC")
+// const realProvider = new ethers.JsonRpcProvider("https://tangible-real.gateway.tenderly.co/29G4PChJRVFiAJiyQg1FnC")
+const realProvider = new ethers.JsonRpcProvider("https://real.drpc.org")
 
 const sdk = new StakeWiseSDK({ 
   network: Network.Mainnet, 
