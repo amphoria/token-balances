@@ -5,6 +5,8 @@ import { ethers } from "ethers";
 // Ethers providers
 const ethProvider = 
 new ethers.JsonRpcProvider("https://eth-mainnet.g.alchemy.com/v2/JTXUw4DQJ0PEVskCBSsadhBnk3rkd4vN")
+const baseProvider = 
+new ethers.JsonRpcProvider("https://base-mainnet.g.alchemy.com/v2/JTXUw4DQJ0PEVskCBSsadhBnk3rkd4vN")
 // const realProvider = new ethers.JsonRpcProvider("https://tangible-real.gateway.tenderly.co/29G4PChJRVFiAJiyQg1FnC")
 const realProvider = new ethers.JsonRpcProvider("https://real.drpc.org")
 
@@ -48,6 +50,17 @@ const eigenlayerABI =
   "function sharesToUnderlyingView(uint256) view returns (uint256)"  
 ]
 
+// superOETHb Contract
+const superOETHbAddress = "0xDBFeFD2e8460a6Ee4955A68582F85708BAEA60A3"
+const superOETHbABI = 
+[
+    // Some details about the contract
+    "function name() view returns (string)",
+    "function decimals() view returns (uint8)",
+    // Function to get balance of address
+    "function balanceOf(address) view returns (uint256)"
+]
+
 // reALT Contract
 const reALTAddress = "0xF96798F49936EfB1a56F99Ceae924b6B8359afFb"
 const reALTABI = 
@@ -74,6 +87,7 @@ const chorusOneContract = new ethers.Contract(chorusOneAddress, stakewiseABI, et
 const osethContract = new ethers.Contract(osETHAddress, osETHABI, ethProvider)
 const eigenlayerPoolContract = new ethers.Contract(eigenlayerPoolAddress, 
                                                     eigenlayerABI, ethProvider)
+const superOethbContract = new ethers.Contract(superOETHbAddress, superOETHbABI, baseProvider)
 const reALTContract = new ethers.Contract(reALTAddress, reALTABI, ethProvider)
 const realEthContract = new ethers.Contract(realEthAddress, realEthABI, realProvider)
 
@@ -102,6 +116,7 @@ export default function App() {
   const [osethChorusOneBal, setOsethChorusOneBal] = useState(0)
   const [osethWalletBal, setOsethWalletBal] = useState(0)
   const [eigenlayerOethBal, setEigenLayerOethBal] = useState(0)
+  const [superOethbBal, setSuperOethbBal] = useState(0)
   const [altlayerBal, setAltlayerBal] = useState(0)
   const [realDaiBal, setRealDaiBal] = useState(0)
   const [realUstbBal, setRealUstbBal] = useState(0)
@@ -182,6 +197,9 @@ export default function App() {
     shares = await eigenlayerPoolContract.shares(userAddress)
     assets = await eigenlayerPoolContract.sharesToUnderlyingView(shares)
     setEigenLayerOethBal(ethers.formatEther(assets))
+
+    balanceWei = await superOethbContract.balanceOf(userAddress)
+    setSuperOethbBal(ethers.formatEther(balanceWei))
 
     shares = await reALTContract.balanceOf(userAddress)
     assets = await reALTContract.convertToAssets(shares)
@@ -274,6 +292,10 @@ export default function App() {
             <div className="balance">
                 <div className="bal-label">EigenLayer OETH:</div>
                 <div className="bal-value">{eigenlayerOethBal}</div>
+            </div>
+            <div className="balance">
+                <div className="bal-label">Origin superOETHb:</div>
+                <div className="bal-value">{superOethbBal}</div>
             </div>
             <div className="balance">
                 <div className="bal-label">Altlayer ALT:</div>
