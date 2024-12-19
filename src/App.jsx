@@ -198,7 +198,9 @@ export default function App() {
     assets = await eigenlayerPoolContract.sharesToUnderlyingView(shares)
     setEigenLayerOethBal(ethers.formatEther(assets))
 
+    console.log("Getting superOETHb balance")
     balanceWei = await superOethbContract.balanceOf(userAddress)
+    console.log(balanceWei)
     setSuperOethbBal(ethers.formatEther(balanceWei))
 
     shares = await reALTContract.balanceOf(userAddress)
