@@ -5,8 +5,10 @@ import { ethers } from "ethers";
 // Ethers providers
 const ethProvider = 
 new ethers.JsonRpcProvider("https://eth-mainnet.g.alchemy.com/v2/JTXUw4DQJ0PEVskCBSsadhBnk3rkd4vN")
+// const baseProvider = 
+// new ethers.JsonRpcProvider("https://base-mainnet.g.alchemy.com/v2/JTXUw4DQJ0PEVskCBSsadhBnk3rkd4vN")
 const baseProvider = 
-new ethers.JsonRpcProvider("https://base-mainnet.g.alchemy.com/v2/JTXUw4DQJ0PEVskCBSsadhBnk3rkd4vN")
+new ethers.JsonRpcProvider("https://base-mainnet.infura.io/v3/ca1b1cda8d6940e6af90ec7b1b8cf84d")
 // const realProvider = new ethers.JsonRpcProvider("https://tangible-real.gateway.tenderly.co/29G4PChJRVFiAJiyQg1FnC")
 const realProvider = new ethers.JsonRpcProvider("https://real.drpc.org")
 
