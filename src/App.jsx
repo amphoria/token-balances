@@ -5,10 +5,10 @@ import { ethers } from "ethers";
 // Ethers providers
 const ethProvider = 
 new ethers.JsonRpcProvider("https://eth-mainnet.g.alchemy.com/v2/JTXUw4DQJ0PEVskCBSsadhBnk3rkd4vN")
-// const baseProvider = 
-// new ethers.JsonRpcProvider("https://base-mainnet.g.alchemy.com/v2/JTXUw4DQJ0PEVskCBSsadhBnk3rkd4vN")
 const baseProvider = 
-new ethers.JsonRpcProvider("https://base-mainnet.infura.io/v3/ca1b1cda8d6940e6af90ec7b1b8cf84d")
+new ethers.JsonRpcProvider("https://base-mainnet.g.alchemy.com/v2/JTXUw4DQJ0PEVskCBSsadhBnk3rkd4vN")
+const sonicProvider = 
+new ethers.JsonRpcProvider("https://sonic-mainnet.g.alchemy.com/v2/JTXUw4DQJ0PEVskCBSsadhBnk3rkd4vN")
 // const realProvider = new ethers.JsonRpcProvider("https://tangible-real.gateway.tenderly.co/29G4PChJRVFiAJiyQg1FnC")
 const realProvider = new ethers.JsonRpcProvider("https://real.drpc.org")
 
@@ -63,6 +63,17 @@ const superOETHbABI =
     "function balanceOf(address) view returns (uint256)"
 ]
 
+// OS Contract
+const osAddress = "0xb1e25689D55734FD3ffFc939c4C3Eb52DFf8A794"
+const osABI = 
+[
+    // Some details about the contract
+    "function name() view returns (string)",
+    "function decimals() view returns (uint8)",
+    // Function to get balance of address
+    "function balanceOf(address) view returns (uint256)"
+]
+
 // reALT Contract
 const reALTAddress = "0xF96798F49936EfB1a56F99Ceae924b6B8359afFb"
 const reALTABI = 
@@ -90,6 +101,7 @@ const osethContract = new ethers.Contract(osETHAddress, osETHABI, ethProvider)
 const eigenlayerPoolContract = new ethers.Contract(eigenlayerPoolAddress, 
                                                     eigenlayerABI, ethProvider)
 const superOethbContract = new ethers.Contract(superOETHbAddress, superOETHbABI, baseProvider)
+const osContract = new ethers.Contract(osAddress, osABI, sonicProvider)
 const reALTContract = new ethers.Contract(reALTAddress, reALTABI, ethProvider)
 const realEthContract = new ethers.Contract(realEthAddress, realEthABI, realProvider)
 
@@ -119,6 +131,7 @@ export default function App() {
   const [osethWalletBal, setOsethWalletBal] = useState(0)
   const [eigenlayerOethBal, setEigenLayerOethBal] = useState(0)
   const [superOethbBal, setSuperOethbBal] = useState(0)
+  const [osBal, setOsBal] = useState(0)
   const [altlayerBal, setAltlayerBal] = useState(0)
   const [realDaiBal, setRealDaiBal] = useState(0)
   const [realUstbBal, setRealUstbBal] = useState(0)
@@ -204,6 +217,11 @@ export default function App() {
     balanceWei = await superOethbContract.balanceOf(userAddress)
     console.log(balanceWei)
     setSuperOethbBal(ethers.formatEther(balanceWei))
+
+    console.log("Getting OS balance")
+    balanceWei = await osContract.balanceOf(userAddress)
+    console.log(balanceWei)
+    setOsBal(ethers.formatEther(balanceWei))
 
     shares = await reALTContract.balanceOf(userAddress)
     assets = await reALTContract.convertToAssets(shares)
@@ -300,6 +318,10 @@ export default function App() {
             <div className="balance">
                 <div className="bal-label">Origin superOETHb:</div>
                 <div className="bal-value">{superOethbBal}</div>
+            </div>
+            <div className="balance">
+                <div className="bal-label">Origin OS:</div>
+                <div className="bal-value">{osBal}</div>
             </div>
             <div className="balance">
                 <div className="bal-label">Altlayer ALT:</div>
